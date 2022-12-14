@@ -2,6 +2,7 @@ const express = require('express');
 const {
   readFile,
   getTalkerById,
+  generateToken,
 } = require('./utils');
 
 const app = express();
@@ -27,6 +28,11 @@ app.get('/talker', async (_req, res) => {
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (_request, response) => {
   response.status(HTTP_OK_STATUS).send();
+});
+
+app.post('/login', async (_req, res) => {
+  const token = generateToken();
+  res.status(200).json({ token });
 });
 
 app.listen(PORT, () => {

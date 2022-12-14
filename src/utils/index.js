@@ -12,4 +12,13 @@ const readFile = async () => {
   }
 };
 
-module.exports = readFile;
+const getTalkerById = async (id) => {
+  const data = await readFile();
+  const talker = data.find((item) => item.id === Number(id));
+  return talker;
+};
+
+module.exports = {
+  readFile,
+  getTalkerById,
+};

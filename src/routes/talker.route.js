@@ -5,7 +5,7 @@ const validateRate = require('../middlewares/validateRate');
 const validateTalk = require('../middlewares/validateTalk');
 const validateToken = require('../middlewares/validateToken');
 const validateWatchedAt = require('../middlewares/validateWatchedAt');
-const { getTalkerById, readFile, writeFile } = require('../utils');
+const { getTalkerById, readFile, writeFile, setTalkerById } = require('../utils');
 
 const router = express.Router();
 
@@ -18,7 +18,6 @@ router.get('/', async (_req, res) => {
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
   const data = await getTalkerById(id);
-  // console.log(data);
   if (!data) return res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
   res.status(200).json(data);
 });
@@ -34,5 +33,19 @@ router.post('/',
     const newData = await writeFile(req);
     res.status(201).json(newData[newData.length - 1]);
   });
+
+  router.put('/:id',
+  validateToken,
+  validateName,
+  validateAge,
+  validateTalk,
+  validateWatchedAt,
+  validateRate,
+  async (req, res) => {
+    const { id } = req.params;
+    const newData = await setTalkerById(id, req);
+    // console.log(newData);
+    res.status(200).json(newData);
+});
 
 module.exports = router;

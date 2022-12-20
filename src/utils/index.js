@@ -39,6 +39,13 @@ const setTalkerById = async (id, req) => {
   return talker;
 };
 
+const deleteTalkerById = async (id) => {
+  const data = await readFile();
+  const talker = data.findIndex((item) => item.id === Number(id));
+  data.splice(talker, 1);
+  await fs.writeFile(dataTalker, JSON.stringify(data, null, 2));
+};
+
 const generateToken = () => crypto.randomBytes(8).toString('hex');
 
 module.exports = {
@@ -46,5 +53,6 @@ module.exports = {
   writeFile,
   getTalkerById,
   setTalkerById,
+  deleteTalkerById,
   generateToken,
 };

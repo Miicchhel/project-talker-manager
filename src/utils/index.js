@@ -46,6 +46,15 @@ const deleteTalkerById = async (id) => {
   await fs.writeFile(dataTalker, JSON.stringify(data, null, 2));
 };
 
+const filteredTalkers = async (q) => {
+  const data = await readFile();
+
+  if (q) {
+    const filteredTalker = data.filter((item) => item.name.includes(q));
+    return filteredTalker;
+  }
+};
+
 const generateToken = () => crypto.randomBytes(8).toString('hex');
 
 module.exports = {
@@ -54,5 +63,6 @@ module.exports = {
   getTalkerById,
   setTalkerById,
   deleteTalkerById,
+  filteredTalkers,
   generateToken,
 };
